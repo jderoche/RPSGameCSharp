@@ -6,8 +6,10 @@ Simple application to process a match of rock, paper, scissors.
 
 # Game Rules
 
-A match takes place between 2 players and is made up of 3 games, with the overall winner being the first player to win 2 games (i.e. best of 3).
-Each game consists of both players selecting one of Rock, Paper or Scissors; the game winner is determined based on the following rules:
+A match takes place between 2 players and is made up of 3 games, 
+with the overall winner being the first player to win 2 games (i.e. best of 3).
+Each game consists of both players selecting one of Rock, Paper or Scissors; 
+the game winner is determined based on the following rules:
 
 · Rock beats scissors
 · Scissors beats paper
@@ -29,30 +31,80 @@ The following are some of the possible extensions that may be made to the applic
 · Longer matches We may want to change the match format to “best of 5” at a later date
 · New “moves” We may expand the possible moves that each player can make (e.g. Rock, Paper, Scissors, Lizard, Spock)
 
-
-### DESIGN
-Using MVC Design
-# Models
-Player
- > Name
- > Type
- > Tactics
- > WinCounter
- > LossCounter
- > Move
-
-GamePlay
- > PlayerList
- > Number of turn
- > Win Condition
+## Approach for Game Design
+This game is like a RPG card game (Example : Heartstone)
+### Specificities
+> Player have a list of move (action or card)  that he can used one time in one match. 
+> It's not a turn base game everyone play at the same time
  
-# View
+# Preliminary Class Design
 
-# Controler
- > GameViewController
- >>> Display Player
- >>> Input or Play PlayerMove
- >>> Display Results
- >>> Display Final Result
- 
+## Move: Enum
+
+## MoveDataBase
+A database to manage all move interaction
+For example
+[
+  [
+    Paper : 
+    [
+      Rock
+    ]
+  ],
+  [
+    Rock : 
+    [
+      Scissor
+    ]
+  ],
+  ...
+  >> Paper win Rock but loss with Scissor drawn with Paper
+  >> Rock win Scissor but loss with Paper ...
+  Can be update for example like this
+  [
+    Well : 
+    [
+      Paper,
+	  Scissor
+    ]
+  ],
+  >> Well win Paper and Scissor but loss with rock
+
+# MoveManager
+This is a list of move that we can build by default for all player but also add a specific 
+behavior for an update of the game rules for exemple after 3 match "Rock" 
+cannot be play or for a specific player "rock can be play only one time for all the game".
++ List<Move>
+
+# Player
+IPlayer<Interface>
++ ShowMove() : move
+>> Get Player Input or apply computation for CPU move
++ RecordGameResult(Move OpponentMove, Move PlayerMove, MatchResult Result)
+
+# Base player model (abstract) : IPlayer
++ Name 
++ Score
++ List<Move>
++ Type (Kind of player, humand, computer)
+## This properties can be used for basic computer strategy process or advanced
++ List<Move> HistoryOpponentMove: List of all previous Opponent move
++ List<Move> HistoryPlayerMove : List of all previous player move
++ List<MatchResult> MatchResultHistory : List of all previous match result
+Methods (Interface)
+
+## Game Scene
++ Display() => Methode to display a screen view
++ Update(GameManager) 
+>>> Methode to get user input, execute player action, etc...
+>>> Give this methode access to gamemanager methode in order to load another scene or quit
+
+## IGameManager
++ GoToScene(string) : Go to a scene add in local container
++ AddScene(string , GameScreen ) : Add scene in local container
++ ExitGame()
++ SceneUpdate()
+
+
+
  
