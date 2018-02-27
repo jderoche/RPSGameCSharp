@@ -25,10 +25,11 @@ using System.Text;
 using RPSGame;
 using RPSGame.GameDataBase;
 using RPSGame.GameManager;
+using RPSGame.PlayerMgt;
 
-
-namespace RPSGame
+namespace RPSGameApplication
 {
+#if DEBUG
   /// <summary>
   /// Main Screen Menu
   /// </summary>
@@ -141,7 +142,7 @@ namespace RPSGame
         {
 
           // Get all players moves
-          PlayerMgt.IPlayer player = gm.PlayerList[PlayerCounter];
+          IPlayer player = gm.PlayerList[PlayerCounter];
           PlayerCounter++;
           PlayersMove.Add(player.GetMove());
         }
@@ -169,7 +170,7 @@ namespace RPSGame
     }
   }
 
-  class HumanPlayer : PlayerMgt.Player
+  class HumanPlayer : Player
   {
 
     public HumanPlayer(string name)
@@ -217,7 +218,7 @@ namespace RPSGame
     }
   }
 
-  class BasicCPU : PlayerMgt.Player
+  class BasicCPU : Player
   {
 
     public BasicCPU(string name)
@@ -247,6 +248,7 @@ namespace RPSGame
       return res;
     }
   }
+#endif
 
   class Program
   {
@@ -259,15 +261,12 @@ namespace RPSGame
       PlayMenu playmenu = new PlayMenu();
       GameoverMenu gameovermenu = new GameoverMenu();
 
-      //instanciate player
-      HumanPlayer human = new HumanPlayer("Player one");
-      BasicCPU basiccpu = new BasicCPU("Player Two");
 
+      // Instanciate the Game Manager
       Game Game_T = new Game();
 
-      Game_T.AddPlayer(human);
-      Game_T.AddPlayer(basiccpu);
 
+      // Add all scene in the Game Manager
       Game_T.AddScene("MainMenu", mainmenu);
       Game_T.AddScene("PlayMenu", playmenu);
       Game_T.AddScene("GameoverMenu", gameovermenu);
@@ -299,7 +298,16 @@ namespace RPSGame
           GameDB.MoveType.eScissor
         };
 
-        foreach (PlayerMgt.IPlayer p in gm.PlayerList)
+        //instanciate player
+        HumanPlayer human = new HumanPlayer("Player one");
+        BasicCPU basiccpu = new BasicCPU("Player Two");
+
+        // Add Players to the Game Manager
+        gm.AddPlayer(human);
+        gm.AddPlayer(basiccpu);
+
+
+        foreach (IPlayer p in gm.PlayerList)
         {
           p.ConfigureMove(PlayerMoves);
         }

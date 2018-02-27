@@ -62,5 +62,10 @@ namespace RPSGame.GameManager
     /// <param name="player"></param>
     void AddPlayer(Player player);
 
+    /// <summary>
+    /// Reset all game
+    /// </summary>
+    void RemoveAllPlayer();
+
   }
 }

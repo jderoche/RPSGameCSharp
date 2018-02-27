@@ -46,23 +46,32 @@ namespace RPSGame.PlayerMgt
     /// <summary>
     /// History of player move
     /// </summary>
-    List<GameDB.MoveType> PlayerMoveHistory;
+    protected List<GameDB.MoveType> PlayerMoveHistory;
 
     /// <summary>
     /// History of opponent move
     /// </summary>
-    List<GameDB.MoveType> OpponentHistory;
+    protected List<GameDB.MoveType> OpponentHistory;
 
     /// <summary>
     /// History of Player vs Opponent match result
     /// </summary>
-    List<GameDB.MatchResult> MatchResultHistory;
+    protected List<GameDB.MatchResult> MatchResultHistory;
 
     string mName = "";
 
     #endregion
 
     #region Interface
+
+    /// <summary>
+    /// Read the current win counter
+    /// </summary>
+    /// <returns></returns>
+    public int ReadWinCounter()
+    {
+      return currentGameWinCnt;
+    }
 
     /// <summary>
     /// Get player move

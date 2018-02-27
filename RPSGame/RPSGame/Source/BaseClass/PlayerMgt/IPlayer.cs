@@ -56,5 +56,12 @@ namespace RPSGame.PlayerMgt
     /// </summary>
     /// <returns></returns>
     List<GameDB.MoveType> GetPlayerMoves();
+
+    /// <summary>
+    /// Get current win counter
+    /// </summary>
+    /// <returns></returns>
+    int ReadWinCounter();
+
   }
 }

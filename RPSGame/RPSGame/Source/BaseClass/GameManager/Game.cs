@@ -44,11 +44,18 @@ namespace RPSGame.GameManager
     #endregion
 
     /// <summary>
+    /// Constructor
+    /// </summary>
     public Game()
     {
       SceneList = new Dictionary<string, GameScreen>();
     }
 
+
+    public void RemoveAllPlayer()
+    {
+      PlayerList.Clear();
+    }
 
     /// <summary>
     /// Add scene in the scenes container
@@ -66,22 +73,14 @@ namespace RPSGame.GameManager
         else
         {
 #if TRACE
-          Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-          Trace.AutoFlush = true;
-          Trace.Indent();
           Trace.WriteLine("Scene null +"+scenename+" cannot be load");
-          Trace.Unindent();
 #endif
         }
       }
       else
       {
 #if TRACE
-      Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-      Trace.AutoFlush = true;
-      Trace.Indent();
       Trace.WriteLine("Scene "+scenename+" already exist");
-      Trace.Unindent();
 #endif
       }
     }
@@ -107,11 +106,7 @@ namespace RPSGame.GameManager
         else
         {
 #if TRACE
-          Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-          Trace.AutoFlush = true;
-          Trace.Indent();
           Trace.WriteLine("Scene " + scenename + " is null");
-          Trace.Unindent();
 #endif
         }
 
@@ -126,13 +121,7 @@ namespace RPSGame.GameManager
       else
       {
 #if TRACE
-       Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-       Trace.AutoFlush = true;
-       Trace.Indent();
-       Trace.WriteLine("Entering Main");
-       Console.WriteLine("Hello World.");
-       Trace.WriteLine("Exiting Main"); 
-       Trace.Unindent();
+       Trace.WriteLine("Scene Not exist"); 
 #endif
       }
     }
