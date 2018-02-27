@@ -61,8 +61,8 @@ namespace RPSGame
       while (validinput == false)
       {
         char input = Console.ReadKey().KeyChar;
-        int value = (input - '0');
-        if ((value > 0) && (value <= keyindex))
+        int value = (input - '0')-1;
+        if ((value >= 0) && (value <= keyindex))
         {
           validinput = true;
           res = (GameDB.MoveType)value;

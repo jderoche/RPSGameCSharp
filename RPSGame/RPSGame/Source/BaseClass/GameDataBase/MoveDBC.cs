@@ -11,8 +11,8 @@ namespace RPSGame.GameDataBase
   {
     public enum MoveType
     {
-      eRock,
       ePaper,
+      eRock,
       eScissor
     };
 

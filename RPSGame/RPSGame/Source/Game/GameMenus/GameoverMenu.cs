@@ -46,6 +46,7 @@ namespace RPSGame
       Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       Console.WriteLine("Press any key...");
+      Console.ReadKey();
       gm.RemoveAllPlayer();
       gm.GoToScene("MainMenu");
 

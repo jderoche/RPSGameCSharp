@@ -81,7 +81,7 @@ namespace RPSGame
         {
           GameCounter++;
           Console.WriteLine("End of Game " + GameCounter.ToString());
-          Console.WriteLine("");
+          Console.WriteLine(PlayersMove[cPlayerOne] + " Vs " + PlayersMove[cPlayerTwo]);
 
           // If drawn game
           if (PlayersMove[cPlayerOne] == PlayersMove[cPlayerTwo])
@@ -96,7 +96,8 @@ namespace RPSGame
             bool bPlayerTwoLoss = false;
 
             // Find if the opponent choose a lower move
-            foreach (GameDB.MoveType mt in GameDB.MoveTable[PlayersMove[0]])
+            List<GameDB.MoveType> listmove = GameDB.MoveTable[PlayersMove[0]];
+            foreach (GameDB.MoveType mt in listmove)
             {
               // Opponent move is in the list => Player 0 win
               if (mt == PlayersMove[1])
@@ -118,7 +119,6 @@ namespace RPSGame
             {
               gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eLoss);
               gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eWin);
-              Console.WriteLine("Drawn Game...");
               Console.WriteLine("");
               Console.WriteLine("Player" + gm.PlayerList[cPlayerTwo].GetName() + " Win...");
               Console.WriteLine("");
@@ -130,6 +130,8 @@ namespace RPSGame
           Console.ReadKey();
           // Reset Player counter
           PlayerCounter = 0;
+          
+          PlayersMove.Clear();
         }
 
       }
@@ -139,6 +141,7 @@ namespace RPSGame
         Console.WriteLine("");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
+        GameCounter = 0;
         gm.GoToScene("GameoverMenu");
       }
 
