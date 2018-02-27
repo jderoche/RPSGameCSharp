@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPSGame.GameMove
+namespace RPSGame.GameDataBase
 {
   /// <summary>
   /// Move Data Base
   /// </summary>
-  public static class MoveDBC
+  public static class GameDB
   {
     public enum MoveType
     {
@@ -16,10 +16,17 @@ namespace RPSGame.GameMove
       eScissor
     };
 
+    public enum MatchResult
+    {
+      eDrawn,
+      eWin,
+      eLoss
+    };
+
     /// <summary>
     /// Dictionary 
     /// </summary>
-    Dictionary<MoveType, List<MoveType>> MoveTable = new Dictionary<MoveType, List<MoveType>>()
+    public static Dictionary<MoveType, List<MoveType>> MoveTable = new Dictionary<MoveType, List<MoveType>>()
     {
       {MoveType.ePaper, new List<MoveType> {MoveType.eRock}},
       {MoveType.eRock, new List<MoveType> {MoveType.eScissor}},

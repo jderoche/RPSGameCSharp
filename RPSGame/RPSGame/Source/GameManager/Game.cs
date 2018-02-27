@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using System.Text;
 using RPSGame;
+using RPSGame.PlayerMgt;
 using RPSGame.UnitTest;
 
 namespace RPSGame.GameManager
@@ -14,7 +15,7 @@ namespace RPSGame.GameManager
 
 #region Events
     // Add Event Notifycation for game scene
-    public delegate void SceneEntry();
+    public delegate void SceneEntry(string name, Game gm);
     public event SceneEntry OnSceneEntry;
 
     // Add Event Notifycation for game scene exit
@@ -22,6 +23,7 @@ namespace RPSGame.GameManager
     public event Exit OnExit;
 #endregion
 
+    #region Private_Properties
     /// <summary>
     /// Scenes container
     /// </summary>
@@ -31,6 +33,15 @@ namespace RPSGame.GameManager
     /// Current Game Scene Instance
     /// </summary>
     private GameScreen CurrentScene;
+    #endregion
+
+    #region Public
+    /// <summary>
+    /// List of player
+    /// </summary>
+    public List<Player> PlayerList;
+
+    #endregion
 
     /// <summary>
     public Game()
@@ -109,7 +120,7 @@ namespace RPSGame.GameManager
         {
           // Call entry Notification
           if (OnSceneEntry != null)
-            OnSceneEntry();
+            OnSceneEntry(scenename,this);
         }
       }
       else
@@ -148,6 +159,15 @@ namespace RPSGame.GameManager
 
     }
 
-  
+    /// <summary>
+    /// Add player in game manager system
+    /// </summary>
+    /// <param name="player"></param>
+    public void AddPlayer(Player player)
+    {
+      if (PlayerList == null)
+        PlayerList = new List<Player>();
+      PlayerList.Add(player);
+    }
 }
 }

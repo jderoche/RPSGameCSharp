@@ -46,7 +46,7 @@
     <Compile Include="Source\GameManager\GameScreen.cs" />
     <Compile Include="Source\GameManager\Game.cs" />
     <Compile Include="Source\GameManager\IGameManager.cs" />
-    <Compile Include="Source\GameDBC\MoveDBC.cs" />
+    <Compile Include="Source\GameDataBase\MoveDBC.cs" />
     <Compile Include="Source\ITest.cs" />
     <Compile Include="Source\PlayerMgt\IPlayer.cs" />
     <Compile Include="Source\PlayerMgt\Player.cs" />

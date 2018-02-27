@@ -78,20 +78,20 @@ cannot be play or for a specific player "rock can be play only one time for all 
 
 # Player
 IPlayer<Interface>
-+ ShowMove() : move
++ GetMove() : move
 >> Get Player Input or apply computation for CPU move
 + RecordGameResult(Move OpponentMove, Move PlayerMove, MatchResult Result)
 
 # Base player model (abstract) : IPlayer
 + Name 
-+ Score
++ current game Win Counter
 + List<Move>
 + Type (Kind of player, humand, computer)
 ## This properties can be used for basic computer strategy process or advanced
 + List<Move> HistoryOpponentMove: List of all previous Opponent move
 + List<Move> HistoryPlayerMove : List of all previous player move
 + List<MatchResult> MatchResultHistory : List of all previous match result
-Methods (Interface)
+
 
 ## Game Scene
 + Display() => Methode to display a screen view
