@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;_TEST_HAMMER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <Compile Include="Source\BaseClass\GameManager\GameScreen.cs" />
     <Compile Include="Source\BaseClass\GameManager\Game.cs" />
     <Compile Include="Source\BaseClass\GameManager\IGameManager.cs" />
-    <Compile Include="Source\BaseClass\GameDataBase\MoveDBC.cs" />
+    <Compile Include="Source\BaseClass\GameDataBase\GameDB.cs" />
     <Compile Include="Source\BaseClass\PlayerMgt\IPlayer.cs" />
     <Compile Include="Source\BaseClass\PlayerMgt\Player.cs" />
     <Compile Include="Source\Game\GameMenus\GameoverMenu.cs" />

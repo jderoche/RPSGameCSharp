@@ -1,4 +1,22 @@
-﻿using System;
+﻿/* 
+ * GameoverMenu.cs
+ * ======================================================================================
+ * Description:
+ * ======================================================================================
+ * Interface for player at the end of Match
+ * 
+ * ======================================================================================
+ * History:
+ * ======================================================================================
+ * Name         Date         Description
+ * J.Deroche    27/02/2018   Creation
+ * 
+ * ======================================================================================
+ * Notes:
+ * ======================================================================================
+ * 
+ * */
+using System;
 using System.Collections.Generic;
 using System.Text;
 using RPSGame.GameDataBase;
@@ -29,8 +47,10 @@ namespace RPSGame
     public override void Update(Game gm)
     {
       Console.WriteLine("Press any key...");
-      char key = Console.ReadKey().KeyChar;
+      Console.ReadKey();
 
+      Console.WriteLine("");
+      Console.WriteLine("");
       Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~");
       int playeronescore = gm.PlayerList[0].ReadWinCounter();
       int playertwoscore = gm.PlayerList[1].ReadWinCounter();
@@ -41,7 +61,7 @@ namespace RPSGame
       }
       else
       {
-        Console.WriteLine("Player: "+((playeronescore>playertwoscore)?gm.PlayerList[0].GetName():gm.PlayerList[1].GetName()));
+        Console.WriteLine(" "+((playeronescore>playertwoscore)?gm.PlayerList[0].GetName():gm.PlayerList[1].GetName()));
       }
       Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~");
 

@@ -14,8 +14,8 @@
  * ======================================================================================
  * Notes:
  * ======================================================================================
- * in debug mode : all the class were defined in this file in order to make quick test
- * and prototype new fonctionnalies
+ * in debug mode : you need to write all the class in this file in order to make quick test
+ * and prototype new fonctionnalities
  * */
 
 using System;
@@ -30,43 +30,6 @@ using RPSGame.PlayerMgt;
 namespace RPSGameApplication
 {
 #if DEBUG
-  /// <summary>
-  /// Main Screen Menu
-  /// </summary>
-  class MainMenu : GameScreen
-  {
-    public override void Display()
-    {
-      base.Display();
-      // Might be a return of json for Web API
-      Console.WriteLine("- Main Menu -");
-      Console.WriteLine("-------------");
-      Console.WriteLine("");
-      Console.WriteLine("P) Play");
-      Console.WriteLine("E) Exit");
-      Console.WriteLine("");
-
-    }
-
-    /// <summary>
-    /// Specific User Input Treatement
-    /// </summary>
-    /// <param name="gm"></param>
-    public override void Update(Game gm)
-    {
-
-      char key = Console.ReadKey().KeyChar;
-      if ( (key == 'E') || (key == 'e') )
-        gm.ExitGame();
-
-      if ( (key == 'P') || (key == 'p') )
-        gm.GoToScene("PlayMenu");
-    }
-  }
-
-  /// <summary>
-  /// Main Screen Menu
-  /// </summary>
   class GameoverMenu : GameScreen
   {
     public override void Display()
@@ -87,15 +50,122 @@ namespace RPSGameApplication
     public override void Update(Game gm)
     {
       Console.WriteLine("Press any key...");
-      char key = Console.ReadKey().KeyChar;
+      Console.ReadKey();
 
+      Console.WriteLine("");
+      Console.WriteLine("");
       Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~");
-      Console.WriteLine("Player: ");
+      int playeronescore = gm.PlayerList[0].ReadWinCounter();
+      int playertwoscore = gm.PlayerList[1].ReadWinCounter();
+
+      if (playeronescore == playertwoscore)
+      {
+        Console.WriteLine("None...(Drawn Match)");
+      }
+      else
+      {
+        Console.WriteLine(" " + ((playeronescore > playertwoscore) ? gm.PlayerList[0].GetName() : gm.PlayerList[1].GetName()));
+      }
       Console.WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
       Console.WriteLine("Press any key...");
+      Console.ReadKey();
+      gm.RemoveAllPlayer();
       gm.GoToScene("MainMenu");
 
+    }
+  }
+
+  class MainMenu : GameScreen
+  {
+    public override void Display()
+    {
+      base.Display();
+      // Might be a return of json for Web API
+      Console.WriteLine("- Main Menu -");
+      Console.WriteLine("-------------");
+      Console.WriteLine("");
+      Console.WriteLine("1) Play (Human Vs Human)");
+      Console.WriteLine("2) Play (Human Vs Basic CPU)");
+      Console.WriteLine("3) Play (Human Vs Advanced CPU)");
+      Console.WriteLine("4) Play (Basic CPU vs Advanced CPU)");
+      Console.WriteLine("E) Exit");
+      Console.WriteLine("");
+
+    }
+
+    /// <summary>
+    /// Specific User Input Treatement
+    /// </summary>
+    /// <param name="gm"></param>
+    public override void Update(Game gm)
+    {
+
+      char key = Console.ReadKey().KeyChar;
+      if ((key == 'E') || (key == 'e'))
+        gm.ExitGame();
+      else
+      {
+        // Add player type according to user selection
+        switch (key)
+        {
+          // Player vs Player
+          case '1':
+            {
+              //instanciate player
+              HumanPlayer Player1 = new HumanPlayer("Player one");
+              HumanPlayer Player2 = new HumanPlayer("Player Two");
+
+              // Add Players to the Game Manager
+              gm.AddPlayer(Player1);
+              gm.AddPlayer(Player2);
+              gm.GoToScene("PlayMenu");
+            }
+            break;
+
+          // Player vs Basic CPU
+          case '2':
+            {
+              //instanciate player
+              HumanPlayer Player1 = new HumanPlayer("Player one");
+              BasicCPU Player2 = new BasicCPU("Player Two");
+
+              // Add Players to the Game Manager
+              gm.AddPlayer(Player1);
+              gm.AddPlayer(Player2);
+              gm.GoToScene("PlayMenu");
+            }
+            break;
+
+          // Player vs Advanced CPU
+          case '3':
+            {
+              //instanciate player
+              HumanPlayer Player1 = new HumanPlayer("Player one");
+              AdvanceCPU Player2 = new AdvanceCPU("Player Two");
+
+              // Add Players to the Game Manager
+              gm.AddPlayer(Player1);
+              gm.AddPlayer(Player2);
+              gm.GoToScene("PlayMenu");
+            }
+            break;
+
+          // Basic CPU vs Advanced CPU
+          case '4':
+            {
+              //instanciate player
+              BasicCPU Player1 = new BasicCPU("Player one");
+              AdvanceCPU Player2 = new AdvanceCPU("Player Two");
+
+              // Add Players to the Game Manager
+              gm.AddPlayer(Player1);
+              gm.AddPlayer(Player2);
+              gm.GoToScene("PlayMenu");
+            }
+            break;
+        }
+      }
     }
   }
 
@@ -104,12 +174,18 @@ namespace RPSGameApplication
     /// <summary>
     /// Number of match
     /// </summary>
-    private const int NumberOfMatch = 5;
+    private const int NumberOfMatch = 3;
+
+    /// <summary>
+    /// Player index
+    /// </summary>
+    private const int cPlayerOne = 0;
+    private const int cPlayerTwo = 1;
 
     /// <summary>
     /// Match and player counter
     /// </summary>
-    private int MatchCounter = 0;
+    private int GameCounter = 0;
     private int PlayerCounter = 0;
 
     /// <summary>
@@ -117,6 +193,9 @@ namespace RPSGameApplication
     /// </summary>
     private List<GameDB.MoveType> PlayersMove = new List<GameDB.MoveType>();
 
+    /// <summary>
+    /// Main Display
+    /// </summary>
     public override void Display()
     {
       base.Display();
@@ -135,9 +214,9 @@ namespace RPSGameApplication
     {
 
       // Play until the end of matches
-      if (MatchCounter < NumberOfMatch)
+      if (GameCounter < NumberOfMatch)
       {
-
+        // Get each player move
         if (PlayerCounter < gm.PlayerList.Count)
         {
 
@@ -146,24 +225,77 @@ namespace RPSGameApplication
           PlayerCounter++;
           PlayersMove.Add(player.GetMove());
         }
+        // Find the Match result
         else
         {
-          MatchCounter++;
-          Console.WriteLine("End of Match " + MatchCounter.ToString());
-          Console.WriteLine("");
+          GameCounter++;
+          Console.WriteLine("End of Game " + GameCounter.ToString());
+          Console.WriteLine(PlayersMove[cPlayerOne] + " Vs " + PlayersMove[cPlayerTwo]);
+
+          // If drawn game
+          if (PlayersMove[cPlayerOne] == PlayersMove[cPlayerTwo])
+          {
+            gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eDrawn);
+            gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eDrawn);
+            Console.WriteLine("");
+            Console.WriteLine(" Drawn Match ");
+            Console.WriteLine("");
+          }
+          else
+          {
+            bool bPlayerTwoLoss = false;
+
+            // Find if the opponent choose a lower move
+            List<GameDB.MoveType> listmove = GameDB.MoveTable[PlayersMove[0]];
+            foreach (GameDB.MoveType mt in listmove)
+            {
+              // Opponent move is in the list => Player One win
+              if (mt == PlayersMove[1])
+              {
+                bPlayerTwoLoss = true;
+                break;
+              }
+            }
+
+            // If player two loss
+            if (bPlayerTwoLoss)
+            {
+              gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eWin);
+              gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eLoss);
+
+              Console.WriteLine("");
+              Console.WriteLine(gm.PlayerList[cPlayerOne].GetName() + " Win...");
+              Console.WriteLine("");
+            }
+            // Other it's player one
+            else
+            {
+              gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eLoss);
+              gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eWin);
+              Console.WriteLine("");
+              Console.WriteLine(gm.PlayerList[cPlayerTwo].GetName() + " Win...");
+              Console.WriteLine("");
+            }
+          }
+
+
           Console.WriteLine("Press any key to continue...");
           Console.ReadKey();
-          // Reset Player counter
+          // Reset Player counter for next game
           PlayerCounter = 0;
+          // Clear previous move list
+          PlayersMove.Clear();
         }
 
       }
+      // Number of max game reached => End of the Match
       else
       {
-        Console.WriteLine("End of Game " + MatchCounter.ToString());
+        Console.WriteLine("End of Match ");
         Console.WriteLine("");
         Console.WriteLine("Press any key to continue...");
         Console.ReadKey();
+        GameCounter = 0;
         gm.GoToScene("GameoverMenu");
       }
 
@@ -195,7 +327,7 @@ namespace RPSGameApplication
         keyindex++;
 
         // Add separator before excepted for the first one XX / YY / ZZ
-        if (keyindex>1)
+        if (keyindex > 1)
           Console.Write(" / ");
         Console.Write(keyindex.ToString() + " => " + mv.ToString());
       }
@@ -206,8 +338,8 @@ namespace RPSGameApplication
       while (validinput == false)
       {
         char input = Console.ReadKey().KeyChar;
-        int value = (input - '0');
-        if ((value > 0) && (value <= keyindex))
+        int value = (input - '0') - 1;
+        if ((value >= 0) && (value <= keyindex))
         {
           validinput = true;
           res = (GameDB.MoveType)value;
@@ -220,30 +352,81 @@ namespace RPSGameApplication
 
   class BasicCPU : Player
   {
-
+    /// <summary>
+    /// Call default constructor
+    /// </summary>
+    /// <param name="name"></param>
     public BasicCPU(string name)
       : base(name)
     {
     }
 
-
+    /// <summary>
+    /// Move strategy : Random
+    /// </summary>
+    /// <returns></returns>
     public override GameDB.MoveType GetMove()
     {
       GameDB.MoveType res = (GameDB.MoveType)0;
 
       Console.WriteLine("CPU : " + this.GetName());
-      int keyindex = 0;
-      foreach (GameDB.MoveType mv in this.GetPlayerMoves())
+
+      // Get the randome move from 1 to PlayerMove list count
+      int value = new Random().Next(1, this.GetPlayerMoves().Count);
+      res = (GameDB.MoveType)value;
+
+
+      return res;
+    }
+  }
+
+  class AdvanceCPU : Player
+  {
+    /// <summary>
+    /// Call default constructor
+    /// </summary>
+    /// <param name="name"></param>
+    public AdvanceCPU(string name)
+      : base(name)
+    {
+    }
+
+    /// <summary>
+    /// Move strategy : Random
+    /// </summary>
+    /// <returns></returns>
+    public override GameDB.MoveType GetMove()
+    {
+      GameDB.MoveType res = (GameDB.MoveType)0;
+
+      Console.WriteLine("CPU : " + this.GetName());
+
+      bool FoundCpuMove = false;
+
+      if (MatchResultHistory.Count > 0)
       {
-        keyindex++;
+        GameDB.MoveType prvMove = OpponentHistory[OpponentHistory.Count - 1];
+        foreach (KeyValuePair<GameDB.MoveType, List<GameDB.MoveType>> listMove in GameDB.MoveTable)
+        {
+          foreach (GameDB.MoveType mvt in GameDB.MoveTable[listMove.Key])
+          {
+            if (mvt == prvMove)
+            {
+              res = listMove.Key;
+              FoundCpuMove = true;
+              break;
+            }
+          }
+          if (FoundCpuMove)
+            break;
+        }
       }
-      
-      int value = new Random().Next(1, keyindex);
-      if ((value > 0) && (value <= keyindex))
+      else
       {
+        // Get the randome move from 1 to PlayerMove list count
+        int value = new Random().Next(1, this.GetPlayerMoves().Count);
         res = (GameDB.MoveType)value;
       }
-
 
       return res;
     }
@@ -286,25 +469,22 @@ namespace RPSGameApplication
       GameRunning = false;
     }
 
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="scenename"></param>
+    /// <param name="gm"></param>
     static void Game_T_OnSceneEntry(string scenename, Game gm)
     {
       if (scenename.ToLower() == "playmenu")
       {
         // Prepare the list of player moves
-        List<GameDB.MoveType> PlayerMoves = new List<GameDB.MoveType>() 
+        List<GameDB.MoveType> PlayerMoves = new List<GameDB.MoveType>();
+
+        foreach(KeyValuePair<GameDB.MoveType,List<GameDB.MoveType>> item in GameDB.MoveTable)
         {
-          GameDB.MoveType.ePaper,
-          GameDB.MoveType.eRock,
-          GameDB.MoveType.eScissor
-        };
-
-        //instanciate player
-        HumanPlayer human = new HumanPlayer("Player one");
-        BasicCPU basiccpu = new BasicCPU("Player Two");
-
-        // Add Players to the Game Manager
-        gm.AddPlayer(human);
-        gm.AddPlayer(basiccpu);
+          PlayerMoves.Add(item.Key);
+        }
 
 
         foreach (IPlayer p in gm.PlayerList)

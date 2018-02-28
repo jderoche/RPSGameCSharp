@@ -105,6 +105,22 @@ IPlayer<Interface>
 + ExitGame()
 + SceneUpdate()
 
+# EXTENSIONS
+## Menu can be added for example : a menu to let the player enter his name
++ We only have to make a new class derivated from GameScreen and override the Display and Update methode
++ In the Update the Game object is given in argument in order to expose the services:
+>> To Add Player
+>> To Launch a new Game Screen
+>> etc... see Game Class
+## New move can be added thanks to GameDB static classic
+>> You only need to add the new move definition in the MoveType (enum)
+>> !WARNING! Restriction is to keep the same order and you MUST define the move behavior in the
+MoveTable and Respect the same Order as defined in the MoveType (Enum)
+>> There is an example with eHammer (Change in the project compile symbol '_TEST_HAMMER' into 'TEST_HAMMER')
+
+# IMPROVE
+The architecture can be improve in order to take more that two players
+> The main modification should be in the Game Screen "the algorithm to find the winner"
 
 
  

@@ -3,7 +3,8 @@
  * ======================================================================================
  * Description:
  * ======================================================================================
- * Interface for player
+ * Interface for player during the game
+ * 
  * 
  * ======================================================================================
  * History:
@@ -14,7 +15,7 @@
  * ======================================================================================
  * Notes:
  * ======================================================================================
- * List of move must be setup before get move
+ * 
  * */
 using System;
 using System.Collections.Generic;
@@ -26,13 +27,19 @@ using RPSGame.GameManager;
 
 namespace RPSGame
 {
+  /// <summary>
+  /// Menu in Game
+  /// </summary>
   class PlayMenu : GameScreen
   {
     /// <summary>
     /// Number of match
     /// </summary>
-    private const int NumberOfMatch = 5;
+    private const int NumberOfMatch = 3;
 
+    /// <summary>
+    /// Player index
+    /// </summary>
     private const int cPlayerOne = 0;
     private const int cPlayerTwo = 1;
 
@@ -47,6 +54,9 @@ namespace RPSGame
     /// </summary>
     private List<GameDB.MoveType> PlayersMove = new List<GameDB.MoveType>();
 
+    /// <summary>
+    /// Main Display
+    /// </summary>
     public override void Display()
     {
       base.Display();
@@ -88,7 +98,8 @@ namespace RPSGame
           {
             gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eDrawn);
             gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eDrawn);
-            Console.WriteLine("Drawn Game...");
+            Console.WriteLine("");
+            Console.WriteLine(" Drawn Match ");
             Console.WriteLine("");
           }
           else
@@ -99,7 +110,7 @@ namespace RPSGame
             List<GameDB.MoveType> listmove = GameDB.MoveTable[PlayersMove[0]];
             foreach (GameDB.MoveType mt in listmove)
             {
-              // Opponent move is in the list => Player 0 win
+              // Opponent move is in the list => Player One win
               if (mt == PlayersMove[1])
               {
                 bPlayerTwoLoss = true;
@@ -107,20 +118,23 @@ namespace RPSGame
               }
             }
 
+            // If player two loss
             if (bPlayerTwoLoss)
             {
               gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eWin);
               gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eLoss);
 
-              Console.WriteLine("Player"+gm.PlayerList[cPlayerOne].GetName()+" Win...");
+              Console.WriteLine("");
+              Console.WriteLine(gm.PlayerList[cPlayerOne].GetName() + " Win...");
               Console.WriteLine("");
             }
+              // Other it's player one
             else
             {
               gm.PlayerList[cPlayerOne].RecordGameResult(PlayersMove[cPlayerTwo], PlayersMove[cPlayerOne], GameDB.MatchResult.eLoss);
               gm.PlayerList[cPlayerTwo].RecordGameResult(PlayersMove[cPlayerOne], PlayersMove[cPlayerTwo], GameDB.MatchResult.eWin);
               Console.WriteLine("");
-              Console.WriteLine("Player" + gm.PlayerList[cPlayerTwo].GetName() + " Win...");
+              Console.WriteLine(gm.PlayerList[cPlayerTwo].GetName() + " Win...");
               Console.WriteLine("");
             }
           }
@@ -128,13 +142,14 @@ namespace RPSGame
 
           Console.WriteLine("Press any key to continue...");
           Console.ReadKey();
-          // Reset Player counter
+          // Reset Player counter for next game
           PlayerCounter = 0;
-          
+          // Clear previous move list
           PlayersMove.Clear();
         }
 
       }
+        // Number of max game reached => End of the Match
       else
       {
         Console.WriteLine("End of Match ");
