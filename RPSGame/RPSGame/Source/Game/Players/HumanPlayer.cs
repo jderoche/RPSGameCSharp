@@ -17,15 +17,12 @@
  * List of move must be setup before get move
  * */
 using System;
-using System.Collections.Generic;
-using System.Text;
+using BaseClass.PlayerMgt;
+using BaseClass.GameDataBase;
 
-using RPSGame.PlayerMgt;
-using RPSGame.GameDataBase;
-
-namespace RPSGame
+namespace Game.Players
 {
-  class HumanPlayer : Player
+  public class HumanPlayer : Player
   {
 
     public HumanPlayer(string name)

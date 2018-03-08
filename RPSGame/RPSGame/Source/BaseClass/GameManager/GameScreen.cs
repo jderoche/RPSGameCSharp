@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPSGame.GameManager
+namespace BaseClass.GameManager
 {
-  public abstract class GameScreen:IGameScreen<Game>
+  public abstract class GameScreen:IGameScreen<GameControler>
   {
 
 
-    public virtual void Update(Game gm)
+    public virtual void Update(GameControler gm)
     {
     }
 

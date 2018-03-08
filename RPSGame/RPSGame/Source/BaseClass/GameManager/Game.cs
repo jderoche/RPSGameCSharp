@@ -1,5 +1,5 @@
 ﻿/* 
- * Game.cs
+ * GameControler.cs
  * ======================================================================================
  * Description:
  * ======================================================================================
@@ -17,23 +17,17 @@
  * 
  * */
 using System;
-#if TRACE
-using System.Diagnostics;
-#endif
 using System.Collections.Generic;
-using System.Text;
-using RPSGame;
-using RPSGame.PlayerMgt;
-using RPSGame.UnitTest;
+using BaseClass.PlayerMgt;
 
-namespace RPSGame.GameManager
+namespace BaseClass.GameManager
 {
-  public class Game:IGameManager
+  public class GameControler:IGameManager
   {
 
 #region Events
     // Add Event Notifycation for game scene
-    public delegate void SceneEntry(string name, Game gm);
+    public delegate void SceneEntry(string name, GameControler gm);
     public event SceneEntry OnSceneEntry;
 
     // Add Event Notifycation for game scene exit
@@ -48,7 +42,7 @@ namespace RPSGame.GameManager
     private Dictionary<string, GameScreen> SceneList;
 
     /// <summary>
-    /// Current Game Scene Instance
+    /// Current GameControler Scene Instance
     /// </summary>
     private GameScreen CurrentScene;
     #endregion
@@ -64,7 +58,7 @@ namespace RPSGame.GameManager
     /// <summary>
     /// Constructor
     /// </summary>
-    public Game()
+    public GameControler()
     {
       SceneList = new Dictionary<string, GameScreen>();
     }
@@ -90,16 +84,11 @@ namespace RPSGame.GameManager
         }
         else
         {
-#if TRACE
-          Trace.WriteLine("Scene null +"+scenename+" cannot be load");
-#endif
         }
       }
       else
       {
-#if TRACE
-      Trace.WriteLine("Scene "+scenename+" already exist");
-#endif
+
       }
     }
 
@@ -123,9 +112,7 @@ namespace RPSGame.GameManager
         // Otherwise switch to the new scene
         else
         {
-#if TRACE
-          Trace.WriteLine("Scene " + scenename + " is null");
-#endif
+
         }
 
         // Call Scene entry notification
@@ -138,9 +125,7 @@ namespace RPSGame.GameManager
       }
       else
       {
-#if TRACE
-       Trace.WriteLine("Scene Not exist"); 
-#endif
+
       }
     }
 

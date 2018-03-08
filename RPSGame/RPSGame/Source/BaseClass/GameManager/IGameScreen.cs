@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 using RPSGame;
 
-/// Game Manager System
-namespace RPSGame.GameManager
+/// GameControler Manager System
+namespace BaseClass.GameManager
 {
   /// <summary>
   /// Interface for game manager loop

@@ -3,7 +3,7 @@
  * ======================================================================================
  * Description:
  * ======================================================================================
- * Game Data Base
+ * GameControler Data Base
  * > Each move definition
  * > Each rule for all game move
  * > Match result definition
@@ -25,10 +25,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace RPSGame.GameDataBase
+namespace BaseClass.GameDataBase
 {
   /// <summary>
-  /// Game Data Base Stataic class can be use every where
+  /// GameControler Data Base Stataic class can be use every where
   /// </summary>
   public static class GameDB
   {

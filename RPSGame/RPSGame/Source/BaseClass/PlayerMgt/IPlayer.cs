@@ -19,9 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using RPSGame.GameDataBase;
+using BaseClass.GameDataBase;
 
-namespace RPSGame.PlayerMgt
+namespace BaseClass.PlayerMgt
 {
   interface IPlayer
   {

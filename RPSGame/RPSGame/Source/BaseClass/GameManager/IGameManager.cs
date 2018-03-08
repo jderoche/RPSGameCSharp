@@ -3,7 +3,7 @@
  * ======================================================================================
  * Description:
  * ======================================================================================
- * Interface for Game Screen Manager
+ * Interface for GameControler Screen Manager
  * 
  * ======================================================================================
  * History:
@@ -16,14 +16,10 @@
  * ======================================================================================
  * -
  * */
-using System;
-using System.Collections.Generic;
-using System.Text;
-using RPSGame;
-using RPSGame.PlayerMgt;
+using BaseClass.PlayerMgt;
 
-/// Game Manager System
-namespace RPSGame.GameManager
+/// GameControler Manager System
+namespace BaseClass.GameManager
 {
   /// <summary>
   /// Interface for game manager loop
@@ -45,7 +41,7 @@ namespace RPSGame.GameManager
     void AddScene(string scenename, GameScreen gamescene);
 
     /// <summary>
-    /// Exit Game Manager
+    /// Exit GameControler Manager
     /// </summary>
     void ExitGame();
 
